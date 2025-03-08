@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumbai's Top 10 Eateries - Foodie Guide</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #feca57;
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --accent: #54a0ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .intro h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .restaurants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .restaurant-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .restaurant-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .restaurant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.05);
+        }
+        
+        .rank {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .restaurant-details {
+            padding: 1.5rem;
+        }
+        
+        .restaurant-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .restaurant-details .cuisine {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .restaurant-details p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .location svg {
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .ad-section {
+            background-color: #f0f0f0;
+            padding: 2rem 1rem;
+            margin: 3rem 0;
+            text-align: center;
+            border-radius: 10px;
+        }
+        
+        .ad-container {
+            max-width: 728px;
+            height: 90px;
+            margin: 0 auto;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            color: #777;
+        }
+        
+        .sidebar-ad {
+            width: 100%;
+            height: 250px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            color: #777;
+            margin-bottom: 2rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        .sidebar {
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 992px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .restaurants {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mumbai's Top 10 Eateries</h1>
+        <p>Discover the best culinary experiences in the city of dreams</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>From Street Food to Fine Dining</h2>
+            <p>Mumbai, the city that never sleeps, is a paradise for food lovers. From iconic street food stalls to luxurious fine dining restaurants, the city offers a diverse range of culinary delights. We've curated a list of the top 10 eateries in Mumbai that you absolutely must try!</p>
+        </div>
+        
+        <div class="ad-section">
+            <div class="ad-container">
+                Google Ads Space - 728x90 Banner
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div class="restaurants">
+                <!-- Restaurant 1 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">1</div>
+                        <img src="/api/placeholder/400/250" alt="The Bombay Canteen">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>The Bombay Canteen</h3>
+                        <span class="cuisine">Modern Indian Cuisine</span>
+                        <p>A celebration of India's diverse culinary heritage with a contemporary twist. Chef Thomas Zacharias creates magic with regional Indian ingredients and dishes.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Kamala Mills Compound, Lower Parel
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 2 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">2</div>
+                        <img src="/api/placeholder/400/250" alt="Trishna">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Trishna</h3>
+                        <span class="cuisine">Seafood</span>
+                        <p>A legendary seafood restaurant known for its butter garlic crab and pomfret tandoori. A must-visit for seafood lovers in Mumbai.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Kala Ghoda, Fort
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 3 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">3</div>
+                        <img src="/api/placeholder/400/250" alt="Masala Library">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Masala Library by Jiggs Kalra</h3>
+                        <span class="cuisine">Progressive Indian</span>
+                        <p>Molecular gastronomy meets traditional Indian cuisine at this innovative restaurant. Famous for their deconstructed dishes and artistic presentations.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            BKC, Bandra East
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 4 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">4</div>
+                        <img src="/api/placeholder/400/250" alt="Swati Snacks">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Swati Snacks</h3>
+                        <span class="cuisine">Gujarati, Street Food</span>
+                        <p>This iconic eatery serves the most authentic Gujarati snacks with a home-style touch. Their panki, sev puri, and dahi batata puri are crowd favorites.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Tardeo, Near Hughes Road
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 5 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">5</div>
+                        <img src="/api/placeholder/400/250" alt="Britannia & Co.">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Britannia & Co.</h3>
+                        <span class="cuisine">Parsi</span>
+                        <p>A heritage restaurant serving authentic Parsi cuisine since 1923. Their legendary berry pulao and sali boti are worth the visit to this vintage eatery.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Ballard Estate, Fort
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 6 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">6</div>
+                        <img src="/api/placeholder/400/250" alt="Bademiya">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Bademiya</h3>
+                        <span class="cuisine">Mughlai, Street Food</span>
+                        <p>A legendary late-night food joint known for its sizzling kebabs and rolls. This street-side eatery has been serving food lovers since 1946.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Behind Taj Mahal Hotel, Colaba
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 7 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">7</div>
+                        <img src="/api/placeholder/400/250" alt="Bastian">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Bastian</h3>
+                        <span class="cuisine">Seafood, Contemporary</span>
+                        <p>A celebrity hotspot known for its innovative seafood dishes and indulgent desserts. Chef Kelvin Cheung's creations blend global flavors with local ingredients.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Linking Road, Bandra West
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 8 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">8</div>
+                        <img src="/api/placeholder/400/250" alt="Cafe Madras">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Cafe Madras</h3>
+                        <span class="cuisine">South Indian</span>
+                        <p>An iconic South Indian restaurant serving authentic Udupi and Mangalorean cuisine since 1940. Their filter coffee, idlis, and dosas are legendary.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            King's Circle, Matunga East
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 9 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">9</div>
+                        <img src="/api/placeholder/400/250" alt="The Table">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>The Table</h3>
+                        <span class="cuisine">Global, Farm-to-Table</span>
+                        <p>A fine dining restaurant with a farm-to-table concept, serving globally inspired cuisine. Their small plates and creative cocktails are highlights.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Colaba
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restaurant 10 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <div class="rank">10</div>
+                        <img src="/api/placeholder/400/250" alt="Pancham Puriwala">
+                    </div>
+                    <div class="restaurant-details">
+                        <h3>Pancham Puriwala</h3>
+                        <span class="cuisine">North Indian, Street Food</span>
+                        <p>Established in 1865, this is Mumbai's oldest puri bhaji restaurant. Their delicious puris served with potato bhaji and kachoris are a must-try.</p>
+                        <div class="location">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Near CST Station, Fort
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="sidebar">
+                    <h3>Food Categories</h3>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Street Food</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Fine Dining</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Seafood</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Vegetarian</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Desserts</a></li>
+                    </ul>
+                    
+                    <div class="sidebar-ad">
+                        Google Ads Space - 300x250
+                    </div>
+                    
+                    <h3>Explore Areas</h3>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">South Mumbai</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Bandra</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Juhu</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Andheri</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="text-decoration: none; color: var(--dark);">Powai</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ad-section" style="margin-top: 3rem;">
+            <div class="ad-container">
+                Google Ads Space - 728x90 Banner
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <h3>Mumbai's Top 10 Eateries</h3>
+            <p>Your ultimate guide to the best food experiences in Mumbai</p>
+            <p>&copy; 2025 Mumbai Foodie Guide. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
